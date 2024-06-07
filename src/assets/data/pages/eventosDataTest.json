@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "titulo": "Evento 1",
+    "descripcion": "Descripción del Evento 1",
+    "fecha": "2024-06-03T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 1,
+      "nombre": "Tipo Evento 1",
+      "icono": "icono1.png"
+    }
+  },
+  {
+    "id": 2,
+    "titulo": "Evento 2",
+    "descripcion": "Descripción del Evento 2",
+    "fecha": "2024-06-04T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 2,
+      "nombre": "Tipo Evento 2",
+      "icono": "icono2.png"
+    }
+  },
+  {
+    "id": 3,
+    "titulo": "Evento 3",
+    "descripcion": "Descripción del Evento 3",
+    "fecha": "2024-06-05T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 3,
+      "nombre": "Tipo Evento 3",
+      "icono": "icono3.png"
+    }
+  },
+  {
+    "id": 4,
+    "titulo": "Evento 4",
+    "descripcion": "Descripción del Evento 4",
+    "fecha": "2024-06-06T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 4,
+      "nombre": "Tipo Evento 4",
+      "icono": "icono4.png"
+    }
+  },
+  {
+    "id": 5,
+    "titulo": "Evento 5",
+    "descripcion": "Descripción del Evento 5",
+    "fecha": "2024-06-07T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 5,
+      "nombre": "Tipo Evento 5",
+      "icono": "icono5.png"
+    }
+  },
+  {
+    "id": 6,
+    "titulo": "Evento 6",
+    "descripcion": "Descripción del Evento 6",
+    "fecha": "2024-06-08T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 6,
+      "nombre": "Tipo Evento 6",
+      "icono": "icono6.png"
+    }
+  },
+  {
+    "id": 7,
+    "titulo": "Evento 7",
+    "descripcion": "Descripción del Evento 7",
+    "fecha": "2024-06-09T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 7,
+      "nombre": "Tipo Evento 7",
+      "icono": "icono7.png"
+    }
+  },
+  {
+    "id": 8,
+    "titulo": "Evento 8",
+    "descripcion": "Descripción del Evento 8",
+    "fecha": "2024-06-10T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 8,
+      "nombre": "Tipo Evento 8",
+      "icono": "icono8.png"
+    }
+  },
+  {
+    "id": 9,
+    "titulo": "Evento 9",
+    "descripcion": "Descripción del Evento 9",
+    "fecha": "2024-06-11T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 9,
+      "nombre": "Tipo Evento 9",
+      "icono": "icono9.png"
+    }
+  },
+  {
+    "id": 10,
+    "titulo": "Evento 10",
+    "descripcion": "Descripción del Evento 10",
+    "fecha": "2024-06-12T17:12:44.911Z",
+    "tipoEvento": {
+      "id": 10,
+      "nombre": "Tipo Evento 10",
+      "icono": "icono10.png"
+    }
+  }
+]

@@ -1,0 +1,40 @@
+<div nz-row nzGutter="25">
+  <!-- skeleton -->
+  <ng-template #loadingSkeleton>
+    <nz-skeleton class="bg-white dark:bg-white/10 rounded-6 p-[30px] pt-[15px]" [nzShape]="circle" [nzActive]="true"
+      [nzParagraph]="{ rows: 5 }"></nz-skeleton>
+  </ng-template>
+  <!-- skeleton -->
+  <div class="mx-[20px] py-4 w-full flex justify-end">
+
+    <nz-demo-modal-basic-evento></nz-demo-modal-basic-evento>
+
+    <button nz-button
+      class="capitalize bg-primary hover:bg-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]">Agregar
+      un nuevo evento</button>
+  </div>
+
+  <div nz-col nzXs="24" class="mb-[25px]">
+    <ng-container *ngIf="showContent; else loadingSkeleton">
+      <nz-eventoTable [dataEventos]="eventos"></nz-eventoTable>
+    </ng-container>
+  </div>
+
+
+
+  <<!-- div nz-col nzXs="24" class="mb-[25px]">
+    <ng-container *ngIf="showContent; else loadingSkeleton">
+      <div
+        class="bg-white dark:bg-white/10 m-0 p-0 text-theme-gray dark:text-white/60 text-[15px] rounded-10 relative h-full">
+        <div
+          class="py-[16px] px-[25px] text-dark dark:text-white/[.87] font-medium text-[17px] border-regular dark:border-white/10 border-b">
+          <h4 class="mb-0 text-lg font-medium text-dark dark:text-white/[.87]">Custom Styles</h4>
+        </div>
+        <div class="p-[25px]">
+          <form-register-evento></form-register-evento>
+        </div>
+      </div>
+    </ng-container>
+  </div> -->
+
+</div>
