@@ -18,6 +18,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzModalComponent } from 'ng-zorro-antd/modal';
 import { NzDemoModalBasicEventoComponent } from './components/basic';
 import { FormRegisterEventoComponent } from './components/custom-validations';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { DatepickerEventoComponent } from './components/datepicker';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @NgModule({
   declarations: [
@@ -25,9 +28,12 @@ import { FormRegisterEventoComponent } from './components/custom-validations';
     EventoTableComponent,
     NzDemoModalBasicEventoComponent,
     FormRegisterEventoComponent,
+   /*  FormsComponentsComponent, */
+    DatepickerEventoComponent,
   ],
   imports: [
     CommonModule,
+    NzSelectModule,
     SharedModule,
     EventoRoutingModule,
     NzTableModule,
@@ -38,7 +44,8 @@ import { FormRegisterEventoComponent } from './components/custom-validations';
     NzCardModule,
     DemoComponentsShareModule,
     NzCollapseModule,
-    NzSkeletonModule
+    NzSkeletonModule,
+    NzDatePickerModule
   ],
   exports: [
     EventoTableComponent,
