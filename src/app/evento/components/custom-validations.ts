@@ -1,23 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
+    FormBuilder,
+    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
+    Validators,
 } from '@angular/forms';
 
 import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
 import { EventosService } from '../services/eventos.service';
+import { Evento, TipoEvento } from '../interfaces/evento';
 
 @Component({
-  selector: 'form-register-evento',
-  template: `
+    selector: 'form-register-evento',
+    template: `
     <form
       class="max-w-full"
       nz-form
       [formGroup]="validateForm"
       (ngSubmit)="submitForm()"
     >
+    <pre>
+      {{ eventToEdit | json }}
+    </pre>
+    <input
+          class="hidden"
+            nz-input
+            formControlName="id"
+            id="id"
+            placeholder="id del evento"
+          />
       <nz-form-item nzGutter="25" class="mb-0">
         <nz-form-control
           nxMd="8"
@@ -59,7 +72,7 @@ import { EventosService } from '../services/eventos.service';
             class="inline-flex items-center rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] h-[50px] outline-none placeholder:text-light placeholder:font-normal text-theme-gray dark:text-white/60 w-[280px]"
             [nzShowTime]="{ nzFormat: 'HH:mm' }"
             nzFormat="yyyy-MM-dd HH:mm"
-            ngModel
+
             (ngModelChange)="onChange($event)"
             (nzOnCalendarChange)="onCalendarChange($event)"
             (nzOnOk)="onOk($event)"
@@ -68,31 +81,32 @@ import { EventosService } from '../services/eventos.service';
       </nz-form-item>
 
       <nz-form-item nzGutter="25" class="mb-0">
-        <nz-form-label
-          class="flex items-center h-8 font-medium dark:text-white/60 mb-[10px]"
-          nzXs="24"
-          nzRequired
-          nzFor="idTipoEvento"
-          >Seleccione tipo de evento
-        </nz-form-label>
-        <nz-form-control
-          nxMd="8"
-          nzXs="24"
-          class="mb-[10px]"
-          nzErrorTip="El tipo de evento es requerdio!"
-        >
-          <nz-select
-            formControlName="idTipoEvento"
-            id="idTipoEvento"
-            class="basic-select"
-            name="basicSelect"
-            ngModel=""
-          >
-            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
+    <nz-form-label
+      class="flex items-center h-8 font-medium dark:text-white/60 mb-[10px]"
+      nzXs="24"
+      nzRequired
+      nzFor="idTipoEvento"
+      >Seleccione tipo de evento
+    </nz-form-label>
+    <nz-form-control
+      nxMd="8"
+      nzXs="24"
+      class="mb-[10px]"
+      nzErrorTip="El tipo de evento es requerido!"
+    >
+      <select
+        formControlName="idTipoEvento"
+        id="idTipoEvento"
+        class="w-full rounded-md border border-gray-300 dark:border-gray-600 text-sm dark:bg-gray-700 dark:text-white p-2"
+      >
+        <option value="1">Cumpleaños</option>
+        <option value="2">Aniversario</option>
+        <option value="3">Navidad</option>
+        <option value="4">Día del Padre</option>
+        <option value="5">Día de la Madre</option>
+      </select>
+    </nz-form-control>
+  </nz-form-item>
       <nz-form-item nzGutter="25" class="mb-0">
         <nz-form-control
           nxMd="8"
@@ -118,7 +132,6 @@ import { EventosService } from '../services/eventos.service';
         </nz-form-control>
       </nz-form-item>
 
-
       <nz-form-item nz-row class="register-area" class="mb-0">
         <nz-form-control>
           <button
@@ -134,73 +147,177 @@ import { EventosService } from '../services/eventos.service';
   `,
 })
 export class FormRegisterEventoComponent implements OnInit {
-  validateForm!: UntypedFormGroup;
-  captchaTooltipIcon: NzFormTooltipIcon = {
-    type: 'info-circle',
-    theme: 'twotone',
-  };
+    validateForm!: FormGroup;
+    captchaTooltipIcon: NzFormTooltipIcon = {
+        type: 'info-circle',
+        theme: 'twotone',
+    };
+
+    @Output() eventoAdded = new EventEmitter<void>();
 
 
-  submitForm(): void {
-    if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
-    } else {
-      Object.values(this.validateForm.controls).forEach((control) => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
+    @Input() eventToEdit: Evento; // Input para recibir la información del evento
+
+
+
+    submitForm(): void {
+        if (this.validateForm.valid) {
+            /*  console.log('submit', this.validateForm.value); */
+
+            const formValue = this.validateForm.value;
+            // console.log('submit', this.validateForm.value)
+
+            const transformedEvento = this.eventToEdit
+                ? this.transformToEventoForEdit(formValue)
+                : this.transformToEvento(formValue);
+
+
+
+            console.log(transformedEvento);
+
+            if (!transformedEvento.id) {
+                this.eventosService.addEvento(transformedEvento).subscribe({
+                    next: (response) => {
+                        // Manejar la respuesta
+                        console.log('Evento añadido con éxito', response);
+                        // Emitir el evento al componente padre
+                        this.eventoAdded.emit();
+                    },
+                    error: (error) => {
+                        // Manejar el error
+                        console.error('Error añadiendo el evento', error);
+                    },
+                    complete: () => {
+                        // Acción opcional cuando la solicitud se complete
+                        console.log('Solicitud completada');
+                    },
+                });
+
+                return
+            }
+
+            this.eventosService.updateEvento(transformedEvento).subscribe({
+                next: (response) => {
+                    // Manejar la respuesta
+                    console.log('Evento modificado con éxito', response);
+                    // Emitir el evento al componente padre
+                    this.eventoAdded.emit();
+                },
+                error: (error) => {
+                    // Manejar el error
+                    console.error('Error modificado el evento', error);
+                },
+                complete: () => {
+                    // Acción opcional cuando la solicitud se complete
+                    console.log('Solicitud completada');
+                },
+            });
+
+        } else {
+            Object.values(this.validateForm.controls).forEach((control) => {
+                if (control.invalid) {
+                    control.markAsDirty();
+                    control.updateValueAndValidity({ onlySelf: true });
+                }
+            });
         }
-      });
     }
-  }
 
-  onChange(result: Date): void {
-    console.log('Selected Time: ', result);
-  }
-
-  onOk(result: Date | Date[] | null): void {
-    console.log('onOk', result);
-  }
-
-  onCalendarChange(result: Array<Date | null>): void {
-    console.log('onCalendarChange', result);
-  }
-
-  updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() =>
-      this.validateForm.controls.checkPassword.updateValueAndValidity()
-    );
-  }
-
-  confirmationValidator = (
-    control: UntypedFormControl
-  ): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
+    onChange(result: Date): void {
+        // console.log('Selected Time: ', result);
     }
-    return {};
-  };
 
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
-  }
+    onOk(result: Date | Date[] | null): void {
+        // console.log('onOk', result);
+    }
 
-  constructor(private fb: UntypedFormBuilder, private eventosService : EventosService) {}
+    onCalendarChange(result: Array<Date | null>): void {
+        // console.log('onCalendarChange', result);
+    }
 
-  ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      titulo: [null, [Validators.required]],
-      fechaInicioFin: [null, [Validators.required]],
-      idTipoEvento: [null, [Validators.required]],
-      descripcion: [null, [Validators.required]],
-      /*   username: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      state: [null, [Validators.required]],
-      zip: [null, [Validators.required]],
-      agree: [false], */
-    });
-  }
+    updateConfirmValidator(): void {
+        /** wait for refresh value */
+        Promise.resolve().then(() =>
+            this.validateForm.controls.checkPassword.updateValueAndValidity()
+        );
+    }
+
+    confirmationValidator = (
+        control: UntypedFormControl
+    ): { [s: string]: boolean } => {
+        if (!control.value) {
+            return { required: true };
+        } else if (control.value !== this.validateForm.controls.password.value) {
+            return { confirm: true, error: true };
+        }
+        return {};
+    };
+
+    getCaptcha(e: MouseEvent): void {
+        e.preventDefault();
+    }
+
+    constructor(
+        private fb: FormBuilder,
+        private eventosService: EventosService
+    ) { }
+
+    ngOnInit(): void {
+        this.validateForm = this.fb.group({
+            id: this.eventToEdit ? this.eventToEdit.id : null,
+            titulo: [this.eventToEdit ? this.eventToEdit.titulo : null, [Validators.required]],
+            fechaInicioFin: [this.eventToEdit ? [this.eventToEdit.fechaInicio, this.eventToEdit.fechaFin] : null, [Validators.required]],
+            idTipoEvento: [this.eventToEdit ? this.eventToEdit.tipoEvento.id : null, [Validators.required]],
+            descripcion: [this.eventToEdit ? this.eventToEdit.descripcion : null, [Validators.required]],
+        });
+        if (this.eventToEdit) {
+            this.setFormValues(this.eventToEdit); // Asignar valores del evento al formulario si existe
+        }
+    }
+
+    setFormValues(evento: Evento): void {
+        //console.log(evento);
+
+        this.validateForm.patchValue({
+            id: evento.id,
+            titulo: evento.titulo,
+            fechaInicioFin: [new Date(evento.fechaInicio), new Date(evento.fechaFin)],
+            idTipoEvento: evento.tipoEvento.id,
+            descripcion: evento.descripcion,
+        });
+    }
+
+    private transformToEvento(formValue: any): Evento {
+        // Transformar fechaInicioFin a un solo Date (puedes ajustar según tus necesidades)
+        const fechaInicio = new Date(formValue.fechaInicioFin[0]);
+        const fechaFin = new Date(formValue.fechaInicioFin[1]);
+
+        // Crear el objeto Evento
+        const evento: Evento = {
+            titulo: formValue.titulo,
+            descripcion: formValue.descripcion,
+            fechaInicio: fechaInicio, // O usa otra lógica para decidir qué fecha usar
+            fechaFin: fechaFin, // O usa otra lógica para decidir qué fecha usar
+            idTipoEvento: formValue.idTipoEvento,
+        };
+
+        return evento;
+    }
+    private transformToEventoForEdit(formValue: any): Evento {
+        // Transformar fechaInicioFin a un solo Date (puedes ajustar según tus necesidades)
+        const fechaInicio = new Date(formValue.fechaInicioFin[0]);
+        const fechaFin = new Date(formValue.fechaInicioFin[1]);
+
+        // Crear el objeto Evento
+        const evento: Evento = {
+            id: formValue.id,
+            titulo: formValue.titulo,
+            descripcion: formValue.descripcion,
+            fechaInicio: fechaInicio, // O usa otra lógica para decidir qué fecha usar
+            fechaFin: fechaFin, // O usa otra lógica para decidir qué fecha usar
+            idTipoEvento: formValue.idTipoEvento,
+        };
+
+        return evento;
+    }
 }

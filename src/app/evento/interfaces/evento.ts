@@ -1,9 +1,11 @@
 export interface Evento {
-  id:          number;
+  id?:          number;
   titulo:      string;
   descripcion: string;
-  fecha:       Date;
-  tipoEvento:  TipoEvento;
+  fechaInicio: Date,
+  fechaFin: Date,
+  idTipoEvento?: number;
+  tipoEvento?:  TipoEvento;
 }
 
 export interface TipoEvento {
