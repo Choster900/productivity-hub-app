@@ -12,6 +12,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ThemeConstantService } from '../shared/services/theme-constant.service';
 import { EventoComponent } from './evento/evento.component';
 import { EventoTableComponent } from './components/eventoTable.component';
+/* NzDropdownMenu */
 
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -21,6 +22,9 @@ import { FormRegisterEventoComponent } from './components/custom-validations';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { DatepickerEventoComponent } from './components/datepicker';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzModalTareasComponent } from './components/NzModalTareasComponent';
+import { NzDropdownPrioridadesComponent } from './components/dropdownPrioridades';
+import { NzDropDownModule} from 'ng-zorro-antd/dropdown';
 
 @NgModule({
   declarations: [
@@ -30,16 +34,21 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     FormRegisterEventoComponent,
    /*  FormsComponentsComponent, */
     DatepickerEventoComponent,
+
+    // Tareas Compoent
+    NzModalTareasComponent,
+    NzDropdownPrioridadesComponent,
   ],
   imports: [
     CommonModule,
     NzSelectModule,
+    NzDropDownModule,
     SharedModule,
     EventoRoutingModule,
     NzTableModule,
     NzFormModule,
     FormsModule,
-     ReactiveFormsModule,
+    ReactiveFormsModule,
     NzModalModule,
     NzCardModule,
     DemoComponentsShareModule,

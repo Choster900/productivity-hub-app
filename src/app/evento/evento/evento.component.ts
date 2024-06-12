@@ -10,10 +10,12 @@ import { EventosService } from '../services/eventos.service';
 export class EventoComponent {
   isLoading = true;
   showContent = false;
+
   public eventos: Evento[] = [];
   public eventoToSendModal: Evento;
 
-  public openModal = false;
+  public openModal: Boolean = false;
+  public openModalTareas: Boolean = false;
 
   constructor(private eventosService: EventosService) {
     /*  this.eventos = eventosDataTest */
@@ -24,19 +26,8 @@ export class EventoComponent {
     this.loadData();
   }
 
-  showModal(): void {
-    this.openModal = true;
-  }
-
-  testingEmit() {
-    this.openModal = true;
-    console.log('testing');
-  }
-
   handleDataEvent(eventos: Evento): void {
-    console.log('Eventos recibidos:', eventos);
     this.eventoToSendModal = eventos;
-    // Aquí puedes manejar el arreglo de eventos como desees
   }
 
   getttingEvents() {

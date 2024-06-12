@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 
 import { User } from '../interfaces/user.interface';
@@ -41,7 +41,11 @@ export class AuthService {
 
     const token = localStorage.getItem("token")
 
-    return this.http.get<User>(`${this.baseUrl}/users/1`)
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<User>(`${this.baseUrl}/api/v1/auth/usuario`,{
+      headers,
+  })
       .pipe(
         tap(user => console.log(user)),
         tap(user => this.user = user),

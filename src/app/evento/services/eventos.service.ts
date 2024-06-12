@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Evento } from '../interfaces/evento';
 import { Observable } from 'rxjs';
+import { TareasEvento } from '../interfaces/tareas-eventos';
 
 @Injectable({
     providedIn: 'root',
@@ -46,4 +47,15 @@ export class EventosService {
             { headers }
         );
     }
+
+    getTareasByEvento(idTarea: number): Observable<TareasEvento>{
+      const token = localStorage.getItem('token');
+
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+      return this.http.get<TareasEvento>(`${this.baseUrl}/api/v1/tarea?idEtiqueta=1&idPrioridad=1&idProyectoOrEvento=11&isProyecto=false`, {
+          headers,
+      });
+    }
+
 }
