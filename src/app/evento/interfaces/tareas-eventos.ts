@@ -1,11 +1,13 @@
 export interface TareasEvento {
-  id:          number;
-  titulo:      string;
-  descripcion: string;
-  fechaLimite: Date;
-  etiqueta:    Etiqueta;
-  prioridad:   Etiqueta;
-  subtareas:   Subtarea[];
+  id:           number;
+  titulo:       string;
+  descripcion:  string;
+  fechaLimite:  Date;
+  idEvento?:    number;
+  etiqueta:     Etiqueta;
+  idPrioridad?: number;
+  prioridad:    Prioridad;
+  subtareas:    Subtarea[];
 
   active?: true,
   disabled?: false,
@@ -17,8 +19,15 @@ export interface Etiqueta {
   color:  string;
 }
 
+export interface Prioridad {
+  id:     number;
+  nombre: string;
+  color:  string;
+}
+
 export interface Subtarea {
   id:     number;
+  idTarea?:    number;
   titulo: string;
   estado: boolean;
 }

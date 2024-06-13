@@ -9,11 +9,11 @@
         {{openModalTareas}}
         <button
             class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]"
-            nz-button (click)="openModal = true"><span>AGREGAR UN NUEVO EVENTO</span></button>
+            nz-button (click)="openModal = true"><span>Agregar evento</span></button>
         <nz-demo-modal-basic-evento [isVisible]="openModal" [EventoToEdit]="eventoToSendModal"
             (whenEventoWasAddedAndModalWasClosed)="getttingEvents()"></nz-demo-modal-basic-evento>
 
-        <nz-modal-tareas [isVisible]="openModalTareas" (closeModal)="openModalTareas = false"></nz-modal-tareas>
+        <nz-modal-tareas [isVisible]="openModalTareas" [EventoToEdit]="eventoToSendModal" (closeModal)="openModalTareas = false"></nz-modal-tareas>
 
     </div>
 

@@ -24,8 +24,8 @@ export class AuthGuard implements CanMatch, CanActivate {
   }
 
   canMatch(route: Route, segments: UrlSegment[]): MaybeAsync<GuardResult> {
-    console.log("Cant Match");
-    console.log({ route, segments });
+  /*   console.log("Cant Match");
+    console.log({ route, segments }); */
 
 
     return this.checkAuthStatus();
@@ -33,8 +33,8 @@ export class AuthGuard implements CanMatch, CanActivate {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
 
-    console.log("Cant Match");
-    console.log({ route, state });
+    /* console.log("Cant Match"); */
+    /* console.log({ route, state }); */
 
 
     return this.checkAuthStatus();

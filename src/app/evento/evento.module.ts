@@ -25,6 +25,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzModalTareasComponent } from './components/NzModalTareasComponent';
 import { NzDropdownPrioridadesComponent } from './components/dropdownPrioridades';
 import { NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import { NzButtonGroupComponent, NzButtonModule } from 'ng-zorro-antd/button';
+import { PrioridadGroupButtonComponent } from './components/PrioridadGroupButtonComponent';
 
 @NgModule({
   declarations: [
@@ -38,10 +40,12 @@ import { NzDropDownModule} from 'ng-zorro-antd/dropdown';
     // Tareas Compoent
     NzModalTareasComponent,
     NzDropdownPrioridadesComponent,
+    PrioridadGroupButtonComponent,
   ],
   imports: [
     CommonModule,
     NzSelectModule,
+    NzButtonModule,
     NzDropDownModule,
     SharedModule,
     EventoRoutingModule,
