@@ -16,9 +16,17 @@ export class ProyectoService {
     getProyectos(): Observable<Proyecto[]> {
         const token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.get<Proyecto[]>(`${this.baseUrl}/api/v1/evento`, {
+        return this.http.get<Proyecto[]>(`${this.baseUrl}/api/v1/proyecto`, {
             headers,
         });
     }
+
+    addProyecto(proyecto: Proyecto): Observable<Proyecto> {
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.post<Proyecto>(`${this.baseUrl}/api/v1/proyecto`, proyecto, { headers });
+    }
+
+
 
 }

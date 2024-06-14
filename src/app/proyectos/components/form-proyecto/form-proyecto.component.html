@@ -1,0 +1,28 @@
+<form class="max-w-full" nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <input class="hidden" nz-input formControlName="id" id="id" placeholder="id del Proyecto" />
+    <nz-form-item nzGutter="25" class="mb-0">
+        <nz-form-control nxMd="8" nzXs="24" class="mb-[10px]" nzErrorTip="El nombre es un campo requerido!">
+            <nz-form-label
+                class="flex items-center [&>label]:text-dark [&>label]:dark:text-white/60 mb-[10px] p-0 text-[15px] capitalize"
+                nzRequired nzFor="nombre">Nombre del proyecto</nz-form-label>
+            <input
+                class="w-full rounded-6 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] min-h-[50px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                nz-input formControlName="nombre" id="nombre" placeholder="nombre del Proyecto" />
+        </nz-form-control>
+
+
+    </nz-form-item>
+
+    <nz-form-item nzGutter="25" class="mb-0">
+        <nz-form-control nxMd="8" nzXs="24" class="mb-[10px]" nzErrorTip="La descripcion es un campo requerido!">
+            <nz-form-label
+                class="flex items-center [&>label]:text-dark [&>label]:dark:text-white/60 mb-[10px] p-0 text-[15px] capitalize"
+                nzRequired nzFor="descripcion">Descripcion del Proyecto</nz-form-label>
+            <textarea formControlName="descripcion" id="descripcion" nzRequired nzFor="descripcion"
+                class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] min-h-[50px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                rows="4" nz-input></textarea>
+        </nz-form-control>
+    </nz-form-item>
+
+
+</form>
