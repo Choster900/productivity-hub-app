@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Proyecto } from '../interfaces/proyecto.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -25,6 +25,14 @@ export class ProyectoService {
         const token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.post<Proyecto>(`${this.baseUrl}/api/v1/proyecto`, proyecto, { headers });
+    }
+
+    updateProyecto(proyecto:Proyecto): Observable<Proyecto> {
+
+        if(!proyecto.id) throw Error('Proyecto id not provided');
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.put<Proyecto>(`${this.baseUrl}/api/v1/proyecto/${proyecto.id}`, proyecto, { headers });
     }
 
 

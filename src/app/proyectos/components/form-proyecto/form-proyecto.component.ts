@@ -36,7 +36,6 @@ export class FormProyectoComponent implements OnInit {
     }
 
     setFormValues(proyecto: Proyecto): void {
-
         this.validateForm.patchValue({
             id: proyecto.id,
             titulo: proyecto.nombre,
@@ -48,21 +47,12 @@ export class FormProyectoComponent implements OnInit {
 
     submitForm(): void {
         if (this.validateForm.valid) {
-            /*  console.log('submit', this.validateForm.value); */
 
             const formValue = this.validateForm.value;
-            // console.log('submit', this.validateForm.value)
-
-        /*     const transformedEvento = this.eventToEdit
-                ? this.transformToEventoForEdit(formValue)
-                : this.transformToEvento(formValue);
- */
-
 
             console.log(formValue);
 
             if (!formValue.id) {
-
                 this.proyectoService.addProyecto(formValue).subscribe({
                     next: (response) => {
                         console.log('Proyecto añadido con éxito', response);
@@ -76,9 +66,22 @@ export class FormProyectoComponent implements OnInit {
                         console.log('Solicitud completada');
                     },
                 });
-
                 return
             }
+
+            this.proyectoService.updateProyecto(formValue).subscribe({
+                next: (response) => {
+                    console.log('Proyecto actualziado con éxito', response);
+                },
+                error: (error) => {
+                    // Manejar el error
+                    console.error('Error añadiendo el evento', error);
+                },
+                complete: () => {
+                    // Acción opcional cuando la solicitud se complete
+                    console.log('Solicitud completada');
+                },
+            });
 
 
 
