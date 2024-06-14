@@ -31,6 +31,25 @@ export const CommonLayout_ROUTES: Routes = [
         ]
     },
 
+     // Proyectos
+     {
+      path: 'proyectos',
+      children: [
+          {
+              path: '',
+              redirectTo: '/proyectos/proyecto',
+              pathMatch: 'full'
+          },
+          {
+              path: '',
+              loadChildren: () => import('../../proyectos/proyectos.module').then(m => m.ProyectosModule),
+              canActivate: [ AuthGuard ],
+              canMatch: [ AuthGuard ],
+            },
+        ]
+    },
+
+
 
     // Charts
     {
