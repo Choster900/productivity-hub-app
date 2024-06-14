@@ -13,7 +13,7 @@
         <nz-demo-modal-basic-evento [isVisible]="openModal" [EventoToEdit]="eventoToSendModal"
             (whenEventoWasAddedAndModalWasClosed)="getttingEvents()"></nz-demo-modal-basic-evento>
 
-        <nz-modal-tareas [isVisible]="openModalTareas" [EventoToEdit]="eventoToSendModal" (closeModal)="openModalTareas = false"></nz-modal-tareas>
+        <nz-modal-tareas [isVisible]="openModalTareas" [EventoToEdit]="eventoToSendModal" (closeModal)="openModalTareas = false; getttingEvents()"></nz-modal-tareas>
 
     </div>
 

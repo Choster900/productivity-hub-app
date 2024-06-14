@@ -121,9 +121,24 @@ export class EventosService {
     );
   }
 
-   deleteSubTareaById( id: number ): Observable<boolean> {
+  updateEtiquetaBasedOnSubTasks(id: number): Observable<Subtarea> {
+    if (!id) throw Error('tarea.id is required');
 
-    return this.http.delete(`${ this.baseUrl }/api/v1/subtarea/${ id }`)
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.put<Subtarea>(
+      `${this.baseUrl}/api/v1/subtarea/${id}`,
+      { headers }
+    );
+  }
+
+   deleteSubTareaById( id: number ): Observable<boolean> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.delete(`${ this.baseUrl }/api/v1/subtarea/${ id }`,{ headers })
       .pipe(
         map( resp => true ),
         catchError( err => of(false) ),

@@ -76,32 +76,32 @@ import { Evento } from 'src/app/evento/interfaces/evento';
                   <th
                     class="bg-[#fafafa] dark:bg-[#323440] px-4 py-2.5 text-start text-light dark:text-white/[.87] text-[12px] font-medium border-none before:hidden rounded-s-[4px]"
                   >
-                    TITULO
+                    Titulo
                   </th>
                   <th
                     class="bg-[#fafafa] dark:bg-[#323440] px-4 py-2.5 text-light dark:text-white/[.87] text-[12px] font-medium border-none before:hidden"
                   >
-                    DESCRIPCION
+                    Descripcion
                   </th>
                   <th
                     class="bg-[#fafafa] dark:bg-[#323440] px-4 py-2.5 text-light dark:text-white/[.87] text-[12px] font-medium border-none before:hidden"
                   >
-                    FECHA INICIO
+                    Fecha de inicio
                   </th>
                   <th
                     class="bg-[#fafafa] dark:bg-[#323440] px-4 py-2.5 text-light dark:text-white/[.87] text-[12px] font-medium border-none before:hidden"
                   >
-                    FECHA FIN
+                    Fecha limite
                   </th>
                   <th
                     class="bg-[#fafafa] dark:bg-[#323440] px-4 py-2.5 text-light dark:text-white/[.87] text-[12px] font-medium border-none before:hidden"
                   >
-                    TIPO EVENTO
+                    Tipo
                   </th>
                   <th
                     class="bg-[#fafafa] dark:bg-[#323440] px-4 py-2.5 text-light dark:text-white/[.87] text-[12px] font-medium border-none before:hidden"
                   >
-                    ACCIONES
+
                   </th>
                 </tr>
               </thead>

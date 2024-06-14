@@ -27,6 +27,7 @@ import { NzDropdownPrioridadesComponent } from './components/dropdownPrioridades
 import { NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import { NzButtonGroupComponent, NzButtonModule } from 'ng-zorro-antd/button';
 import { PrioridadGroupButtonComponent } from './components/PrioridadGroupButtonComponent';
+import { NzCheckboxComponent, NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   declarations: [
@@ -58,11 +59,13 @@ import { PrioridadGroupButtonComponent } from './components/PrioridadGroupButton
     DemoComponentsShareModule,
     NzCollapseModule,
     NzSkeletonModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzCheckboxModule,
   ],
   exports: [
     EventoTableComponent,
     NzModalComponent,
+    NzCheckboxComponent,
   ],
   providers: [
     ThemeConstantService
