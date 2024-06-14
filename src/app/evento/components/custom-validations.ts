@@ -21,9 +21,9 @@ import { Evento, TipoEvento } from '../interfaces/evento';
       [formGroup]="validateForm"
       (ngSubmit)="submitForm()"
     >
-    <pre>
+    <!-- <pre>
       {{ eventToEdit | json }}
-    </pre>
+    </pre> -->
     <input
           class="hidden"
             nz-input
