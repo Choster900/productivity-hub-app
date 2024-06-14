@@ -13,6 +13,7 @@ export class ProyectoComponent implements OnInit {
     public isLoading = true;
     public showContent = false;
     public isOpenModal: Boolean = false;
+    public isOpenModalTareas: Boolean = false;
     public proyectos: Proyecto[] = [];
     public proyectoToSendModal: Proyecto;
 

@@ -11,6 +11,7 @@ export class DatatableComponent {
 
     @Output() openModal = new EventEmitter<void>();
     @Output() proyectoWasSelected = new EventEmitter<Proyecto>();
+    @Output() openModalTareas = new EventEmitter<Proyecto>();
 
     //Table Data
     seller: any;

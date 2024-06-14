@@ -3,6 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { Proyecto } from '../interfaces/proyecto.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { TareasProyecto } from '../interfaces/tarea-proyecto.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +35,18 @@ export class ProyectoService {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.put<Proyecto>(`${this.baseUrl}/api/v1/proyecto/${proyecto.id}`, proyecto, { headers });
     }
+
+
+    getTareasByProyecto(proyectoId: number): Observable<TareasProyecto[]> {
+      const token = localStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<TareasProyecto[]>(
+          `${this.baseUrl}/api/v1/tarea?idProyectoOrEvento=${proyectoId}&isProyecto=true`,
+          {
+              headers,
+          }
+      );
+  }
 
 
 

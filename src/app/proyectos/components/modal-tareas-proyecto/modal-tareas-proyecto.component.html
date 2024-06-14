@@ -1,0 +1,108 @@
+<nz-modal [(nzVisible)]="wasOpenModalTareas" [nzWidth]="700" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()"
+    nzTitle="Agregar tareas">
+    <ng-container *nzModalContent>
+        <nz-collapse class="bg-transparent" [nzBordered]="false">
+            <nz-collapse-panel class="{{ collapsePanelClass }}" *ngFor="let item of tareas" [nzHeader]="item.titulo"
+                [nzActive]="item.active">
+                <input class="hidden" [(ngModel)]="item.id" placeholder="id del evento" />
+                <input *ngIf="item.etiqueta.id !== 3; else tituloTarea"
+                    class="w-full h-9 rounded-6 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    nz-input [(ngModel)]="item.titulo" placeholder="Titulo del evento" />
+                <ng-template #tituloTarea>
+                    <div class=" flex gap-3 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                            <path fill-rule="evenodd"
+                                d="M15 8c0 .982-.472 1.854-1.202 2.402a2.995 2.995 0 0 1-.848 2.547 2.995 2.995 0 0 1-2.548.849A2.996 2.996 0 0 1 8 15a2.996 2.996 0 0 1-2.402-1.202 2.995 2.995 0 0 1-2.547-.848 2.995 2.995 0 0 1-.849-2.548A2.996 2.996 0 0 1 1 8c0-.982.472-1.854 1.202-2.402a2.995 2.995 0 0 1 .848-2.547 2.995 2.995 0 0 1 2.548-.849A2.995 2.995 0 0 1 8 1c.982 0 1.854.472 2.402 1.202a2.995 2.995 0 0 1 2.547.848c.695.695.978 1.645.849 2.548A2.996 2.996 0 0 1 15 8Zm-3.291-2.843a.75.75 0 0 1 .135 1.052l-4.25 5.5a.75.75 0 0 1-1.151.043l-2.25-2.5a.75.75 0 1 1 1.114-1.004l1.65 1.832 3.7-4.789a.75.75 0 0 1 1.052-.134Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="">{{ item.titulo }}</span>
+                    </div>
+                </ng-template>
+
+                <textarea *ngIf="item.etiqueta.id !== 3; else decripcionTarea" [(ngModel)]="item.descripcion"
+                    class="w-full rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px] min-h-[50px] outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                    rows="4"></textarea>
+                <ng-template #decripcionTarea>
+                    <div class=" flex gap-3 items-center py-4">
+                        <span class="">{{ item.descripcion }}</span>
+                    </div>
+                </ng-template>
+
+                <div class="flex gap-4">
+                    <buttons-prioridad-component [prioridadSeleccionada]="item.prioridad.id || item.idPrioridad"
+                        (priorityWasSelected)="onChangePriority($event, item)"></buttons-prioridad-component>
+
+                    <div class="flex gap">
+                        <nz-form-label class="flex  font-normal capitalize dark:text-white/60" nzLg="6" nzMd="9"
+                            nzXs="24" nzFor="datePicker">Fecha Limite</nz-form-label>
+                        <nz-form-control>
+                            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm" [(ngModel)]="item.fechaLimite"
+                                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                                class="h-8 inline-flex items-center rounded-4 border-normal border-1 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px] py-[12px]  outline-none placeholder:text-light placeholder:font-normal text-theme-gray dark:text-white/60 w-[250px] mb-[15px]"
+                                id="datePicker"></nz-date-picker>
+                        </nz-form-control>
+                    </div>
+                </div>
+
+                <div *ngIf="item.subtareas && item.subtareas.length > 0">
+                    <nz-collapse class="bg-transparent mt-[20px]" [nzBordered]="false">
+                        <div *ngFor="let subItem of item.subtareas; let i = index"
+                            class="flex gap-4 text-[15px] items-center font-normal text-light dark:text-white/60 py-1 pl-5">
+                            <label class="dark:text-white/[.87]" nz-checkbox [(ngModel)]="subItem.estado"
+                                (change)="onClickInCheckBox(item, i)"></label>
+                            <input *ngIf="!subItem.estado; else tituloSubTarea"
+                                class="w-full rounded-6 border-normal border-1 h-8 text-[15px] dark:bg-white/10 dark:border-white/10 px-[20px]  outline-none placeholder:text-[#A0A0A0] text-theme-gray dark:text-white/60"
+                                nz-input [(ngModel)]="subItem.titulo" placeholder="Titulo del evento" />
+                            <ng-template #tituloSubTarea>
+                                <div class=" flex gap-3 items-center">
+                                    <span class="line-through">{{ subItem.titulo }}</span>
+                                </div>
+                            </ng-template>
+                            <svg *ngIf="!subItem.estado" (click)="onDeleteSubTask(item, i)"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                                class="size-4 text-red-600 cursor-pointer hover:text-red-700">
+                                <path fill-rule="evenodd"
+                                    d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="py-1 pl-5 w-full">
+                            <div (click)="onAddSubTask(item)"
+                                class="w-full cursor-pointer flex justify-center items-center py-2 text-xs h-8 border-2 border-dashed border-slate-400">
+                                <span class="mr-2">Agregar subtarea</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                                    class="w-4 h-4">
+                                    <path
+                                        d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </nz-collapse>
+                </div>
+            </nz-collapse-panel>
+
+            <div class="py-1  w-full">
+                <div (click)="onAddTaskAndSubTask()"
+                    class="w-full cursor-pointer flex justify-center items-center py-2 text-xs h-8 border-2 border-dashed border-slate-400">
+                    <span class="mr-2">Agregar nueva tarea</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                        <path
+                            d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+                    </svg>
+                </div>
+            </div>
+        </nz-collapse>
+    </ng-container>
+    <ng-template #modalFooter>
+        <button
+            class="hover:bg-gray-hbr border-solid border-1 dark:bg-transparent border-normal dark:border-white/10 text-light dark:text-white/60 dark:focus:text-white/60 hover:text-white text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]"
+            nz-button nzType="default" (click)="handleCancel()">
+            Cancel
+        </button>
+        <button
+            class="bg-primary hover:bg-primary-hbr hover:border-primary-hbr border-solid border-1 border-primary text-white dark:text-white/[.87] text-[14px] font-semibold leading-[22px] inline-flex items-center justify-center rounded-[4px] px-[20px] h-[44px]"
+            nz-button nzType="primary" (click)="onSubmit()" [nzLoading]="isConfirmLoading">
+            Guardar y cerrar
+        </button>
+    </ng-template>
+</nz-modal>
