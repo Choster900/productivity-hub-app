@@ -14,7 +14,7 @@
             (wasClosed)="isOpenModal = false; gettingProyectos()"></modal-proyecto-component>
 
         <modal-tareas-proyecto-component [wasOpenModalTareas]="isOpenModalTareas" [proyectoToEdit]="proyectoToSendModal"
-            (wasClosed)="isOpenModal = false; gettingProyectos()"></modal-tareas-proyecto-component>
+            (closeModal)="isOpenModalTareas = false; gettingProyectos()"></modal-tareas-proyecto-component>
     </div>
 
     <div nz-col nzXs="24" class="mb-[25px]">

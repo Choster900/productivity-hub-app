@@ -109,7 +109,8 @@ import { Subtarea, TareasEvento } from '../interfaces/tareas-eventos';
                   class="flex gap-4 text-[15px] items-center font-normal text-light dark:text-white/60 py-1 pl-5"
                 >
                   <label
-                    class="dark:text-white/[.87]"
+                  [nzDisabled]="!subItem.id"
+                  class="dark:text-white/[.87]"
                     nz-checkbox
                     [(ngModel)]="subItem.estado"
                     (change)="onClickInCheckBox(item, i)"

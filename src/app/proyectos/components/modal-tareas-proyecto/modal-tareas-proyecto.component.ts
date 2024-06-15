@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, type OnInit } from '@angular/core';
 import { Proyecto } from '../../interfaces/proyecto.interface';
 import { ProyectoService } from '../../services/proyecto.service';
-import { TareasProyecto } from '../../interfaces/tarea-proyecto.interface';
+import { Subtarea, TareasProyecto } from '../../interfaces/tarea-proyecto.interface';
 
 @Component({
     selector: 'modal-tareas-proyecto-component',
@@ -56,67 +56,67 @@ export class ModalTareasProyectoComponent implements OnInit {
     }
 
     onSubmit(): void {
-        /*   this.tareas.forEach((element) => {
+        this.tareas.forEach((element) => {
             if (!element.id) {
-              this.eventoService.addTaskToEvento(element).subscribe({
-                next: (response: TareasEvento) => {
-                  console.log('tareas agregada[]', response);
-                  this.closeModal.emit();
-                },
-                error: (error) => {
-                  console.error('Error obteniendo las tareas', error);
-                },
-                complete: () => {
-                  console.log('Solicitud completada');
-                },
-              });
+                this.proyectoService.addTaskToEvento(element).subscribe({
+                    next: (response: TareasProyecto) => {
+                        console.log('tareas agregada[]', response);
+                        this.closeModal.emit();
+                    },
+                    error: (error) => {
+                        console.error('Error obteniendo las tareas', error);
+                    },
+                    complete: () => {
+                        console.log('Solicitud completada');
+                    },
+                });
 
-              return;
+                return;
             }
 
-            this.eventoService.updateTaskInEvents(element).subscribe({
-              next: (response: TareasEvento) => {
-                this.closeModal.emit();
-                console.log('tarea actualizada[]', response);
-              },
-              error: (error) => {
-                console.error('Error obteniendo las tareas', error);
-              },
-              complete: () => {
-                console.log('Solicitud completada');
-              },
+            this.proyectoService.updateTaskInEvents(element).subscribe({
+                next: (response: TareasProyecto) => {
+                    this.closeModal.emit();
+                    console.log('tarea actualizada[]', response);
+                },
+                error: (error) => {
+                    console.error('Error obteniendo las tareas', error);
+                },
+                complete: () => {
+                    console.log('Solicitud completada');
+                },
             });
 
             element.subtareas.forEach((subTarea) => {
-              if (!subTarea.id) {
-                this.eventoService.addSubTaskInTask(subTarea, element.id).subscribe({
-                  next: (response: Subtarea) => {
-                    this.closeModal.emit();
-                    console.log('sub tarea agregada[]', response);
-                  },
-                  error: (error) => {
-                    console.error('Error obteniendo las tareas', error);
-                  },
-                  complete: () => {
-                    console.log('Solicitud completada');
-                  },
+                if (!subTarea.id) {
+                    this.proyectoService.addSubTaskInTask(subTarea, element.id).subscribe({
+                        next: (response: Subtarea) => {
+                            this.closeModal.emit();
+                            console.log('sub tarea agregada[]', response);
+                        },
+                        error: (error) => {
+                            console.error('Error obteniendo las tareas', error);
+                        },
+                        complete: () => {
+                            console.log('Solicitud completada');
+                        },
+                    });
+                    return;
+                }
+                this.proyectoService.updateSubTaskInTask(subTarea).subscribe({
+                    next: (response: Subtarea) => {
+                        this.closeModal.emit();
+                        console.log('sub tarea actualizada[]', response);
+                    },
+                    error: (error) => {
+                        console.error('Error obteniendo las tareas', error);
+                    },
+                    complete: () => {
+                        console.log('Solicitud completada');
+                    },
                 });
-                return;
-              }
-              this.eventoService.updateSubTaskInTask(subTarea).subscribe({
-                next: (response: Subtarea) => {
-                  this.closeModal.emit();
-                  console.log('sub tarea actualizada[]', response);
-                },
-                error: (error) => {
-                  console.error('Error obteniendo las tareas', error);
-                },
-                complete: () => {
-                  console.log('Solicitud completada');
-                },
-              });
             });
-          }); */
+        });
     }
 
     onAddTaskAndSubTask(): void {
@@ -152,72 +152,72 @@ export class ModalTareasProyectoComponent implements OnInit {
     }
 
     onAddSubTask(task: TareasProyecto): void {
-        /* const newSubtask: Subtarea = {
-          id: 0, // Assuming 0 or another value that signifies a new subtask
-          titulo: 'New Subtask',
-          estado: false,
+        const newSubtask: Subtarea = {
+            id: 0, // Assuming 0 or another value that signifies a new subtask
+            titulo: 'New Subtask',
+            estado: false,
         };
 
         task.subtareas.push(newSubtask);
-        this.updateTaskEtiqueta(task); */
+        this.updateTaskEtiqueta(task);
     }
 
     onDeleteSubTask(tarea: TareasProyecto, index: number): void {
-        /* this.eventoService.deleteSubTareaById(tarea.subtareas[index].id).subscribe({
-          next: (response: Boolean) => {
-            console.log('sub tarea actualizada[]', response);
-            tarea.subtareas.splice(index, 1); // Elimina la subtarea en el índice especificado
-            this.updateTaskEtiqueta(tarea);
-          },
-          error: (error) => {
-            console.error('Error obteniendo las tareas', error);
-          },
-          complete: () => {
-            console.log('Solicitud completada');
-          },
-        }); */
+        this.proyectoService.deleteSubTareaById(tarea.subtareas[index].id).subscribe({
+            next: (response: Boolean) => {
+                console.log('sub tarea actualizada[]', response);
+                tarea.subtareas.splice(index, 1); // Elimina la subtarea en el índice especificado
+                this.updateTaskEtiqueta(tarea);
+            },
+            error: (error) => {
+                console.error('Error obteniendo las tareas', error);
+            },
+            complete: () => {
+                console.log('Solicitud completada');
+            },
+        });
     }
 
     onClickInCheckBox(tarea: TareasProyecto, index: number): void {
-        /* console.log(tarea.subtareas[index].id);
+        console.log(tarea.subtareas[index].id);
 
         this.updateTaskEtiqueta(tarea);
 
-        this.eventoService
-          .updateEtiquetaOnSubTasks(tarea.subtareas[index].id)
-          .subscribe({
-            next: (response: Subtarea) => {
-              console.log('SubTarea cambiando etiqueta', response);
-            },
-            error: (error) => {
-              console.error('Error obteniendo las tareas', error);
-            },
-            complete: () => {
-              console.log('Solicitud completada');
-            },
-          }); */
+        this.proyectoService
+            .updateEtiquetaOnSubTasks(tarea.subtareas[index].id)
+            .subscribe({
+                next: (response: Subtarea) => {
+                    console.log('SubTarea cambiando etiqueta', response);
+                },
+                error: (error) => {
+                    console.error('Error obteniendo las tareas', error);
+                },
+                complete: () => {
+                    console.log('Solicitud completada');
+                },
+            });
     }
 
     updateTaskEtiqueta(tarea: TareasProyecto): void {
-        /*  // Determinar los estados de las subtareas
-         const allTrue = tarea.subtareas.every(
-           (subtarea) => subtarea.estado === true
-         );
-         const allFalse = tarea.subtareas.every(
-           (subtarea) => subtarea.estado === false
-         );
-         const someTrue = tarea.subtareas.some(
-           (subtarea) => subtarea.estado === true
-         );
+        // Determinar los estados de las subtareas
+        const allTrue = tarea.subtareas.every(
+            (subtarea) => subtarea.estado === true
+        );
+        const allFalse = tarea.subtareas.every(
+            (subtarea) => subtarea.estado === false
+        );
+        const someTrue = tarea.subtareas.some(
+            (subtarea) => subtarea.estado === true
+        );
 
-         // Asignar el valor de etiqueta.id basado en los estados
-         if (allTrue) {
-           tarea.etiqueta.id = 3;
-         } else if (someTrue) {
-           tarea.etiqueta.id = 2;
-         } else if (allFalse) {
-           tarea.etiqueta.id = 1;
-         } */
+        // Asignar el valor de etiqueta.id basado en los estados
+        if (allTrue) {
+            tarea.etiqueta.id = 3;
+        } else if (someTrue) {
+            tarea.etiqueta.id = 2;
+        } else if (allFalse) {
+            tarea.etiqueta.id = 1;
+        }
     }
 
     handleOk(): void {
