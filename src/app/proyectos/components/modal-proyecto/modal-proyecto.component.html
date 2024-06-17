@@ -1,7 +1,7 @@
 <nz-modal [(nzVisible)]="wasOpen" [nzWidth]="700" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()"
     nzTitle="Agregando un nuevo evento">
     <ng-container *nzModalContent>
-        <form-proyecto-component [proyectoForEdit]="proyectoForEdit"></form-proyecto-component>
+        <form-proyecto-component (wasClosed)="wasClosed.emit();" [proyectoForEdit]="proyectoForEdit"></form-proyecto-component>
     </ng-container>
     <ng-template #modalFooter>
         <button

@@ -27,6 +27,14 @@ export const ROUTES: SideNavInterface[] = [{
     submenu: []
   },
   {
+    path: '/calendar/tareas',
+    title: 'Calendario',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'rise',
+    submenu: []
+  },
+  {
     path: '/changelog/changelog',
     title: 'Change-Log',
     iconType: 'nzIcon',

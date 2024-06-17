@@ -49,6 +49,24 @@ export const CommonLayout_ROUTES: Routes = [
         ]
     },
 
+    // Tareas en calendario
+    {
+      path: 'calendar',
+      children: [
+          {
+              path: '',
+              redirectTo: '/calendar/tareas',
+              pathMatch: 'full'
+          },
+          {
+              path: '',
+              loadChildren: () => import('../../calendar-task/calendar-task.module').then(m => m.CalendarTaskModule),
+              canActivate: [ AuthGuard ],
+              canMatch: [ AuthGuard ],
+            },
+        ]
+    },
+
 
 
     // Charts

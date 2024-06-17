@@ -24,7 +24,7 @@ export class ModalTareasProyectoComponent implements OnInit {
     constructor(private proyectoService: ProyectoService) { }
 
     ngOnInit(): void {
-        // this.getTareasByEventoId(1); // Asegúrate de pasar un ID válido
+        // this.getTareasByEventoId(1)
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -153,7 +153,7 @@ export class ModalTareasProyectoComponent implements OnInit {
 
     onAddSubTask(task: TareasProyecto): void {
         const newSubtask: Subtarea = {
-            id: 0, // Assuming 0 or another value that signifies a new subtask
+            id: 0, 
             titulo: 'New Subtask',
             estado: false,
         };

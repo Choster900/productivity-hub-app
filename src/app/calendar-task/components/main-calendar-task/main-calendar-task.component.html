@@ -1,0 +1,25 @@
+
+<div nz-row nzGutter="25">
+  <div nz-col nzXXl="6" nzXl="9" nzXs="24" class="mb-[25px]">
+    <!-- New project added -->
+
+    <div class="mini-calendar mb-[25px]">
+      <full-calendar [options]="calendarOptions2" class="bg-white dark:bg-white/10 rounded-10"></full-calendar>
+    </div>
+
+  </div>
+  <div nz-col nzXXl="18" nzXl="15" nzXs="24">
+    <full-calendar class="relative bg-white main-calendar dark:bg-white/10 rounded-10 p-[25px] overflow-x-auto" *ngIf='calendarVisible()' [options]='calendarOptions()'>
+      <ng-template #eventContent let-arg>
+        <div [ngClass]="['rounded-4 px-[5px] overflow-x-hidden w-full bg-' + arg.event.extendedProps.label]">
+          <h6 class="text-[15px] text-white font-normal capitalize">{{ arg.event.title }}</h6>
+          <p class="text-[13px] text-white" *ngIf="arg.event.extendedProps.description">{{ arg.event.extendedProps.description }}</p>
+          <div class="{{arg.event.extendedProps.label}}"></div>
+        </div>
+      </ng-template>
+    </full-calendar>
+  </div>
+</div>
+
+
+
