@@ -1,10 +1,10 @@
 export interface User {
-  id:            number;
+  id?:            number;
   email:         string;
   password?:     string;
   persona:       Persona;
-  configuracion: Configuracion;
-  token:         string;
+  configuracion?: Configuracion;
+  token?:         string;
 }
 
 export interface Configuracion {
@@ -14,7 +14,7 @@ export interface Configuracion {
 }
 
 export interface Persona {
-  id:              number;
+  id?:              number;
   nombre:          string;
   apellido:        string;
   fechaNacimiento: Date;

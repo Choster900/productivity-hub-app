@@ -24,9 +24,9 @@ export class AuthService {
 
 
 
-      return this.http.post<User>(`${this.baseUrl}/api/v1/auth/login`, { email, password })
+    return this.http.post<User>(`${this.baseUrl}/api/v1/auth/login`, { email, password })
       .pipe(
-     /*    tap(user => console.log(user)), */
+        /*    tap(user => console.log(user)), */
         tap(user => {
           this.user = user;
           localStorage.setItem("token", user.token)
@@ -43,9 +43,9 @@ export class AuthService {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<User>(`${this.baseUrl}/api/v1/auth/usuario`,{
+    return this.http.get<User>(`${this.baseUrl}/api/v1/auth/usuario`, {
       headers,
-  })
+    })
       .pipe(
         /* tap(user => console.log(user)), */
         tap(user => this.user = user),
@@ -64,6 +64,24 @@ export class AuthService {
   logOut(): void {
     this.user = undefined
     localStorage.removeItem("token")
+  }
+
+
+  singUp(usuario: User): Observable<User> {
+
+
+
+    return this.http.post<User>(`${this.baseUrl}/api/v1/auth/usuario`,  usuario )
+      .pipe(
+        /*    tap(user => console.log(user)), */
+        tap(user => {
+          console.log(user);
+
+         /*  this.user = user;
+          localStorage.setItem("token", user.token)
+          localStorage.setItem("userId", user.id.toString()) */
+        })
+      )
   }
 
 
