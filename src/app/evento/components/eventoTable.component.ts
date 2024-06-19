@@ -149,7 +149,7 @@ export class EventoTableComponent {
   //Table Data
   seller: any;
   tabData: { key: string; label: string }[];
-
+ 
   constructor(private eventoService: EventosService) {
     this.tabData = [
       { key: 'today', label: 'Today' },

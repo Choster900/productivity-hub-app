@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalTareasProyectoComponent } from './components/modal-tareas-proyecto/modal-tareas-proyecto.component';
 import { ButtonsPrioridadComponent } from './components/buttons-prioridad/buttons-prioridad.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
     CommonModule,
     ProyectosRoutingModule,
     NzSkeletonModule,
+    NzTableModule,
     NzModalModule,
     NzFormModule,
     FormsModule,ReactiveFormsModule,
