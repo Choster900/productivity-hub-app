@@ -225,6 +225,8 @@ export class ModalTareasProyectoComponent implements OnInit {
                 });
 
 
+                this.createNotification('success', 'Tarea actualizada', 'Tarea guardada exitosamente.');
+
             }
         });
     }
