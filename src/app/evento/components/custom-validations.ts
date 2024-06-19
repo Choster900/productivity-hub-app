@@ -11,6 +11,8 @@ import {
 import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
 import { EventosService } from '../services/eventos.service';
 import { Evento, TipoEvento } from '../interfaces/evento';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'form-register-evento',
@@ -152,6 +154,7 @@ export class FormRegisterEventoComponent implements OnInit {
         type: 'info-circle',
         theme: 'twotone',
     };
+    confirmModal?: NzModalRef; // For testing by now
 
     @Output() eventoAdded = new EventEmitter<void>();
 
@@ -161,66 +164,85 @@ export class FormRegisterEventoComponent implements OnInit {
 
 
     submitForm(): void {
-        if (this.validateForm.valid) {
-            /*  console.log('submit', this.validateForm.value); */
 
-            const formValue = this.validateForm.value;
-            // console.log('submit', this.validateForm.value)
+        this.confirmModal = this.modal.confirm({
+            nzTitle: '¿Desea guardar los cambios?',
+            nzContent: 'Los cambios se guardarán y se reflejarán de inmediato.',
+            nzOnOk: async () => {
+                try {
 
-            const transformedEvento = this.eventToEdit
-                ? this.transformToEventoForEdit(formValue)
-                : this.transformToEvento(formValue);
+                    if (this.validateForm.valid) {
+                        /*  console.log('submit', this.validateForm.value); */
+
+                        const formValue = this.validateForm.value;
+                        // console.log('submit', this.validateForm.value)
+
+                        const transformedEvento = this.eventToEdit
+                            ? this.transformToEventoForEdit(formValue)
+                            : this.transformToEvento(formValue);
 
 
 
-            console.log(transformedEvento);
+                        console.log(transformedEvento);
 
-            if (!transformedEvento.id) {
-                this.eventosService.addEvento(transformedEvento).subscribe({
-                    next: (response) => {
-                        // Manejar la respuesta
-                        console.log('Evento añadido con éxito', response);
-                        // Emitir el evento al componente padre
-                        this.eventoAdded.emit();
-                    },
-                    error: (error) => {
-                        // Manejar el error
-                        console.error('Error añadiendo el evento', error);
-                    },
-                    complete: () => {
-                        // Acción opcional cuando la solicitud se complete
-                        console.log('Solicitud completada');
-                    },
-                });
+                        if (!transformedEvento.id) {
+                            this.eventosService.addEvento(transformedEvento).subscribe({
+                                next: (response) => {
+                                    // Manejar la respuesta
+                                    console.log('Evento añadido con éxito', response);
+                                    // Emitir el evento al componente padre
+                                    this.createNotification('success', 'Evento Agregado', 'El evento se ha agregado exitosamente.');
 
-                return
-            }
+                                    this.eventoAdded.emit();
+                                },
+                                error: (error) => {
+                                    // Manejar el error
+                                    console.error('Error añadiendo el evento', error);
+                                },
+                                complete: () => {
+                                    // Acción opcional cuando la solicitud se complete
+                                    console.log('Solicitud completada');
+                                },
+                            });
 
-            this.eventosService.updateEvento(transformedEvento).subscribe({
-                next: (response) => {
-                    // Manejar la respuesta
-                    console.log('Evento modificado con éxito', response);
-                    // Emitir el evento al componente padre
-                    this.eventoAdded.emit();
-                },
-                error: (error) => {
-                    // Manejar el error
-                    console.error('Error modificado el evento', error);
-                },
-                complete: () => {
-                    // Acción opcional cuando la solicitud se complete
-                    console.log('Solicitud completada');
-                },
-            });
+                            return
+                        }
 
-        } else {
-            Object.values(this.validateForm.controls).forEach((control) => {
-                if (control.invalid) {
-                    control.markAsDirty();
-                    control.updateValueAndValidity({ onlySelf: true });
+                        this.eventosService.updateEvento(transformedEvento).subscribe({
+                            next: (response) => {
+                                // Manejar la respuesta
+                                console.log('Evento modificado con éxito', response);
+                                this.createNotification('success', 'Evento Editado', 'El evento se ha editado exitosamente.');
+
+                                // Emitir el evento al componente padre
+                                this.eventoAdded.emit();
+                            },
+                            error: (error) => {
+                                // Manejar el error
+                                console.error('Error modificado el evento', error);
+                            },
+                            complete: () => {
+                                // Acción opcional cuando la solicitud se complete
+                                console.log('Solicitud completada');
+                            },
+                        });
+
+                    } else {
+                        Object.values(this.validateForm.controls).forEach((control) => {
+                            if (control.invalid) {
+                                control.markAsDirty();
+                                control.updateValueAndValidity({ onlySelf: true });
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.log('Oops errors!', error);
+                    this.createNotification('error', 'Error', error);
+
                 }
-            });
-        }
+            }
+        });
+
     }
 
     onChange(result: Date): void {
@@ -259,7 +281,9 @@ export class FormRegisterEventoComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private eventosService: EventosService
+        private eventosService: EventosService,
+        private modal: NzModalService,
+        private notification: NzNotificationService,
     ) { }
 
     ngOnInit(): void {
@@ -320,4 +344,14 @@ export class FormRegisterEventoComponent implements OnInit {
 
         return evento;
     }
+
+
+    createNotification(type: string, title: string, content: string): void {
+        this.notification.create(
+            type,
+            title,
+            content
+        );
+    }
+
 }
