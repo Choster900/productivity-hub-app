@@ -144,7 +144,7 @@ export class ModalTareasProyectoComponent implements OnInit {
             nzTitle: '¿Desea guardar los cambios?',
             nzContent: 'Los cambios se guardarán y se reflejarán de inmediato.',
             nzOnOk: async () => {
-                await this.waitForTimeout(1000); // Espera a que el timeout termine
+                await this.waitForTimeout(2000); // Espera a que el timeout termine
 
                 // Manejando cada tarea
                 this.tareas.forEach((element) => {
