@@ -4,6 +4,7 @@ import {
     ChangeDetectorRef,
     TemplateRef,
     ViewEncapsulation,
+    OnInit,
 } from '@angular/core';
 import {
     CalendarOptions,
@@ -15,8 +16,10 @@ import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { INITIAL_EVENTS, createEventId } from '../../utils/event-utils';
+import {  createEventId, mapTareasToEventInputs } from '../../utils/event-utils';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { TareasService } from '../../service/tareas.service';
+import { Tarea } from '../../interface/tarea.interface';
 
 @Component({
     selector: 'main-calendar-task-component',
@@ -111,64 +114,81 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     `,
     ],
 })
-export class MainCalendarTaskComponent {
+export class MainCalendarTaskComponent  {
+
+    constructor(private changeDetector: ChangeDetectorRef, private modalService: NzModalService, private tareasService: TareasService) {
+        this.loadTareas();
+    }
+
+   /*  ngOnInit(): void {
+        this.getHttpRequestTask()
+    }
+ */
+
+    loadTareas() {
+        this.tareasService.fetchAllTasks().subscribe({
+            next: (tareas: Tarea[]) => {
+                const events = mapTareasToEventInputs(tareas);
+                this.calendarOptions.update(options => ({ ...options, events: events }));
+                console.log(events);
+
+            },
+            error: (error) => {
+                console.error('Error fetching tasks', error);
+            },
+        });
+    }
+
     radioValue = 'A';
 
     calendarVisible = signal(true);
 
     // Definir la fecha exacta aquí
-    exactDate: string = '2024-06-14';
+    exactDate = signal<string>('2024-06-14'); // Usa una señal para la fecha dinámica
+
 
     calendarOptions = signal<CalendarOptions>({
-        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
+        plugins: [
+            interactionPlugin,
+            dayGridPlugin,
+            timeGridPlugin,
+            listPlugin,
+        ],
         headerToolbar: {
-            left: 'title',
-            right: 'timeGridDay',
-        },
-        initialDate: this.exactDate, // Aquí se establece la fecha exacta
-        initialView: 'timeGridDay',
-        initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-        weekends: true,
-        editable: true,
-        selectable: true,
-        selectMirror: true,
-        dayMaxEvents: true,
-        select: this.handleDateSelect.bind(this),
-        eventClick: this.handleEventClick.bind(this),
-        eventsSet: this.handleEvents.bind(this),
-        /* you can update a remote database when these fire:
-            eventAdd:
-            eventChange:
-            eventRemove:
-            */
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,listMonth'
+          },
+          initialView: 'listMonth',
+          weekends: true,
+          editable: true,
+          selectable: true,
+          selectMirror: true,
+          dayMaxEvents: true,
+         /*  select: this.handleDateSelect.bind(this),
+          eventClick: this.handleEventClick.bind(this),
+          eventsSet: this.handleEvents.bind(this), */
+          events: [] // Inicialmente vacío
     });
+
+
     currentEvents = signal<EventApi[]>([]);
 
-    calendarOptions2: CalendarOptions = {
-        initialView: 'dayGridMonth',
-        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-        headerToolbar: {
-            left: 'prev',
-            center: 'title',
-            right: 'next',
-        },
-        weekends: true,
-        editable: true,
-        selectable: true,
-        selectMirror: true,
-        dayMaxEvents: true,
-        select: this.handleDateSelectedInLittleCalendar.bind(this),
-        // Add any other configurations you need...
-    };
 
-    constructor(
-        private changeDetector: ChangeDetectorRef,
-        private modalService: NzModalService
-    ) { }
+
+
 
     handleDateSelectedInLittleCalendar(selectInfo: DateSelectArg) {
-        console.log(selectInfo);
+        console.log(selectInfo.startStr);
+        this.exactDate.set(selectInfo.startStr); // Actualiza la fecha exacta
+        this.updateCalendarOptions();
     }
+    updateCalendarOptions() {
+        this.calendarOptions.update((options) => {
+            return { ...options, initialDate: this.exactDate() };
+        });
+    }
+
 
     handleCalendarToggle() {
         this.calendarVisible.update((bool) => !bool);
