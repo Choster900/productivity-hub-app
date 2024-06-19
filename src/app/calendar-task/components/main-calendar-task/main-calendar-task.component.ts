@@ -157,9 +157,9 @@ export class MainCalendarTaskComponent  {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,listMonth'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
           },
-          initialView: 'listMonth',
+          initialView: 'dayGridMonth',
           weekends: true,
           editable: true,
           selectable: true,
