@@ -131,8 +131,21 @@ export class ProyectoService {
 
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-        return this.http.patch<Subtarea>(`${this.baseUrl}/api/v1/subtarea/${id}`,{}, {
+        return this.http.patch<Subtarea>(`${this.baseUrl}/api/v1/subtarea/${id}`, {}, {
             headers
         });
+    }
+
+
+
+    deleteProyectoById(id: number): Observable<Boolean> {
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+        return this.http.delete(`${this.baseUrl}/api/v1/proyecto/${id}`, { headers })
+            .pipe(
+                map(resp => true),
+                catchError(err => of(false)),
+            );
     }
 }

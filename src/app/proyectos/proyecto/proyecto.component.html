@@ -20,7 +20,7 @@
     <div nz-col nzXs="24" class="mb-[25px]">
         <ng-container *ngIf="showContent; else loadingSkeleton">
             <datatable-component [Proyectos]="proyectos" (openModal)="isOpenModal = true"
-                (openModalTareas)="isOpenModalTareas=true"
+                (openModalTareas)="isOpenModalTareas=true" (reloadTable)="gettingProyectos()"
                 (proyectoWasSelected)="handleDataProyecto($event)"></datatable-component>
         </ng-container>
     </div>

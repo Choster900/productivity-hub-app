@@ -25,9 +25,9 @@ export class Login1Component {
 
       this.authService.login(this.validateForm.value.userName, this.validateForm.value.password)
         .subscribe(user => {
-          this.router.navigate(['/dashboard/demo-one'])
+          this.router.navigate(['/eventos/evento'])
         })
-        
+
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
         if (control.invalid) {
@@ -51,7 +51,7 @@ export class Login1Component {
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       userName: ['prueba@gmail.com', [Validators.required]],
-      password: ['1235678', [Validators.required]],
+      password: ['12345678', [Validators.required]],
       remember: [true],
     });
   }

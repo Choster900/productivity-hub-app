@@ -2,20 +2,20 @@ import {
   SideNavInterface
 } from '../../interfaces/side-nav.type';
 
-export const ROUTES: SideNavInterface[] = [{
+export const ROUTES: SideNavInterface[] = [/* {
     path: '/dashboard/demo-nine',
     title: 'Dashboard',
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'appstore-add',
     submenu: []
-  },
+  }, */
   {
     path: '/eventos/evento',
     title: 'Eventos',
     iconType: 'nzIcon',
     iconTheme: 'outline',
-    icon: 'rise',
+    icon: 'appstore-add',
     submenu: []
   },
   {
@@ -23,7 +23,7 @@ export const ROUTES: SideNavInterface[] = [{
     title: 'Proyectos',
     iconType: 'nzIcon',
     iconTheme: 'outline',
-    icon: 'rise',
+    icon: 'appstore-add',
     submenu: []
   },
   {
@@ -39,10 +39,10 @@ export const ROUTES: SideNavInterface[] = [{
     title: 'Change-Log',
     iconType: 'nzIcon',
     iconTheme: 'outline',
-    icon: 'rise',
+    icon: 'appstore',
     submenu: []
   },
-  {
+ /*  {
     path: '',
     title: 'Apps',
     iconType: 'nzIcon',
@@ -830,5 +830,5 @@ export const ROUTES: SideNavInterface[] = [{
         submenu: []
       }
     ]
-  }
+  } */
 ]

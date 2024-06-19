@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Evento } from 'src/app/evento/interfaces/evento';
+import { EventosService } from '../services/eventos.service';
 
 @Component({
   selector: 'nz-eventoTable',
@@ -15,49 +16,6 @@ import { Evento } from 'src/app/evento/interfaces/evento';
         >
           Todos los eventos
         </h1>
-        <div class="py-[16px] flex items-center gap-[15px]">
-          <ul class="flex items-center mb-0">
-            <li>
-              <button
-                type="button"
-                [class]="
-                  sellingTab === 'today'
-                    ? 'inline-flex items-center bg-primary/10 dark:bg-white/10 px-3 h-8 text-primary dark:text-white/[.87] text-13 font-medium rounded-md'
-                    : 'inline-flex items-center px-3 h-8 text-light dark:text-white/60 hover:text-primary text-13'
-                "
-                (click)="handleClick('today')"
-              >
-                Today
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                [class]="
-                  sellingTab === 'week'
-                    ? 'inline-flex items-center bg-primary/10 dark:bg-white/10 px-3 h-8 text-primary dark:text-white/[.87] text-13 font-medium rounded-md'
-                    : 'inline-flex items-center px-3 h-8 text-light dark:text-white/60 dark:hover:text-white hover:text-primary text-13 font-medium rounded-md'
-                "
-                (click)="handleClick('week')"
-              >
-                Week
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                [class]="
-                  sellingTab === 'month'
-                    ? 'inline-flex items-center bg-primary/10 dark:bg-white/10 px-3 h-8 text-primary dark:text-white/[.87] text-13 font-medium rounded-md'
-                    : 'inline-flex items-center px-3 h-8 text-light dark:text-white/60 dark:hover:text-white hover:text-primary text-13 font-medium rounded-md'
-                "
-                (click)="handleClick('month')"
-              >
-                Month
-              </button>
-            </li>
-          </ul>
-        </div>
       </div>
       <div class="px-[25px] pt-0 pb-[25px]">
         <div
@@ -136,11 +94,11 @@ import { Evento } from 'src/app/evento/interfaces/evento';
                     class="ps-4 pe-4 py-2.5 font-normal last:text-end capitalize text-[14px] text-dark dark:text-white/[.87] border-none group-hover:bg-transparent rounded-e-[4px] flex justify-center items-center space-x-4"
                   >
                     <div class="items-center">
-                      <svg
+                      <svg (click)="deleteEventoById(event.id)"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        class="h-5 w-5 text-red-700 dark:text-white"
+                        class="h-5 w-5 text-red-700 dark:text-white cursor-pointer"
                       >
                         <path
                           fill-rule="evenodd"
@@ -186,17 +144,36 @@ export class EventoTableComponent {
 
 
   @Output() openModalTareas = new EventEmitter<void>();
+  @Output() reloadTable = new EventEmitter<void>();
 
   //Table Data
   seller: any;
   tabData: { key: string; label: string }[];
 
-  constructor() {
+  constructor(private eventoService: EventosService) {
     this.tabData = [
       { key: 'today', label: 'Today' },
       { key: 'week', label: 'Week' },
       { key: 'month', label: 'Month' },
     ];
+  }
+
+
+  deleteEventoById(id: number): void {
+
+    this.eventoService.deleteEventoById(id).subscribe({
+      next: (response) => {
+        console.log('Evento eliminado con éxito', response);
+        this.reloadTable.emit();
+      },
+      error: (error) => {
+        console.error('Error añadiendo el evento', error);
+      },
+      complete: () => {
+        console.log('Solicitud completada');
+      },
+    });
+
   }
 
   //Dropdown Data

@@ -209,7 +209,7 @@
         <li>
           <span class="flex items-center cursor-pointer text-light whitespace-nowrap" nz-dropdown [nzDropdownMenu]="profile">
             <nz-avatar [nzIcon]="'user'" nzSrc="assets/images/avatars/thumbs.png"></nz-avatar>
-            <span class="me-1.5 ms-2.5 text-body dark:text-white/60 text-sm font-medium max-md:hidden">a{{  user?.email }}</span>
+            <span class="me-1.5 ms-2.5 text-body dark:text-white/60 text-sm font-medium max-md:hidden">{{  user?.persona.nombre }} {{user?.persona.apellido }}</span>
             <span class="[&>svg]:w-[10px] [&>svg]:h-[10px] [&>svg]:max-md:ms-[5px]" nz-icon nzType="down" nzTheme="outline"></span>
           </span>
           <nz-dropdown-menu #profile="nzDropdownMenu">
@@ -219,7 +219,7 @@
                 <nz-avatar [nzIcon]="'user'" nzSrc="assets/images/avatars/thumbs.png" class="me-4"></nz-avatar>
                 <figcaption>
                   <h1 class="text-dark dark:text-white/[.87] mb-0.5 text-sm">Md. Rafiq</h1>
-                  <p class="mb-0 text-xs text-body dark:text-white/60">UI Expert</p>
+                  <p class="mb-0 text-xs text-body dark:text-white/60">{{user|json}}</p>
                 </figcaption>
               </figure>
               <ul nz-menu class="mb-0 bg-transparent shadow-none">

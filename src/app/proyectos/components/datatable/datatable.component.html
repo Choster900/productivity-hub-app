@@ -5,37 +5,6 @@
             class="mb-0 inline-flex items-center py-[16px] max-sm:pb-[5px] overflow-hidden whitespace-nowrap text-ellipsis text-[18px] font-semibold text-dark dark:text-white/[.87]">
             Todos los eventos
         </h1>
-        <div class="py-[16px] flex items-center gap-[15px]">
-            <ul class="flex items-center mb-0">
-                <li>
-                    <button type="button" [class]="
-                  sellingTab === 'today'
-                    ? 'inline-flex items-center bg-primary/10 dark:bg-white/10 px-3 h-8 text-primary dark:text-white/[.87] text-13 font-medium rounded-md'
-                    : 'inline-flex items-center px-3 h-8 text-light dark:text-white/60 hover:text-primary text-13'
-                " (click)="handleClick('today')">
-                        Today
-                    </button>
-                </li>
-                <li>
-                    <button type="button" [class]="
-                  sellingTab === 'week'
-                    ? 'inline-flex items-center bg-primary/10 dark:bg-white/10 px-3 h-8 text-primary dark:text-white/[.87] text-13 font-medium rounded-md'
-                    : 'inline-flex items-center px-3 h-8 text-light dark:text-white/60 dark:hover:text-white hover:text-primary text-13 font-medium rounded-md'
-                " (click)="handleClick('week')">
-                        Week
-                    </button>
-                </li>
-                <li>
-                    <button type="button" [class]="
-                  sellingTab === 'month'
-                    ? 'inline-flex items-center bg-primary/10 dark:bg-white/10 px-3 h-8 text-primary dark:text-white/[.87] text-13 font-medium rounded-md'
-                    : 'inline-flex items-center px-3 h-8 text-light dark:text-white/60 dark:hover:text-white hover:text-primary text-13 font-medium rounded-md'
-                " (click)="handleClick('month')">
-                        Month
-                    </button>
-                </li>
-            </ul>
-        </div>
     </div>
    <!--  <pre>
     {{Proyectos|json}}
@@ -77,8 +46,8 @@
                             <td
                                 class="ps-4 pe-4 py-2.5 font-normal last:text-end capitalize text-[14px] text-dark dark:text-white/[.87] border-none group-hover:bg-transparent rounded-e-[4px] flex justify-center items-center space-x-4">
                                 <div class="items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                        class="h-5 w-5 text-red-700 dark:text-white">
+                                    <svg (click)="deleteProyectoById(proyecto.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        class="h-5 w-5 text-red-700 dark:text-white cursor-pointer">
                                         <path fill-rule="evenodd"
                                             d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"
                                             clip-rule="evenodd" />

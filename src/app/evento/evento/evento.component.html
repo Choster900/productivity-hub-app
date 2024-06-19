@@ -20,7 +20,7 @@
 
     <div nz-col nzXs="24" class="mb-[25px]">
         <ng-container *ngIf="showContent; else loadingSkeleton">
-            <nz-eventoTable (openModal)="openModal = true;" (openModalTareas)="openModalTareas = true"
+            <nz-eventoTable (openModal)="openModal = true;" (reloadTable)="getttingEvents()" (openModalTareas)="openModalTareas = true"
                 (dataEvent)="handleDataEvent($event)" [dataEventos]="eventos"></nz-eventoTable>
         </ng-container>
     </div>
