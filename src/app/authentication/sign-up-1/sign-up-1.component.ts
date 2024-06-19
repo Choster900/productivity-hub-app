@@ -27,13 +27,6 @@ export class SignUp1Component {
             this.signUpForm.controls[ i ].updateValueAndValidity();
         }
 
-        console.log(this.signUpForm.value);
-
-
-
-        console.log(this.transformToEvento(this.signUpForm.value));
-
-
         this.authService.singUp(this.transformToEvento(this.signUpForm.value))
             .subscribe(user => {
                 console.log(user);
@@ -43,9 +36,8 @@ export class SignUp1Component {
     }
 
     private transformToEvento(formValue: any): User {
-        // Transformar fechaInicioFin a un solo Date (puedes ajustar según tus necesidades)
 
-        // Crear el objeto Evento
+        // Crear el objeto usuario
         const usuarioSignedUp: User = {
             email: formValue.email,
             password: formValue.password,
