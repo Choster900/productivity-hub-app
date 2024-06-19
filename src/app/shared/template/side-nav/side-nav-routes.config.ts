@@ -34,7 +34,7 @@ export const ROUTES: SideNavInterface[] = [/* {
     icon: 'rise',
     submenu: []
   },
-  {
+  /*{
     path: '/changelog/changelog',
     title: 'Change-Log',
     iconType: 'nzIcon',
@@ -42,7 +42,7 @@ export const ROUTES: SideNavInterface[] = [/* {
     icon: 'appstore',
     submenu: []
   },
- /*  {
+   {
     path: '',
     title: 'Apps',
     iconType: 'nzIcon',

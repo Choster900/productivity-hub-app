@@ -113,6 +113,8 @@ export class FormProyectoComponent implements OnInit {
                     }
                 } catch (error) {
                     console.log('Oops errors!', error);
+                    this.createNotification('error', 'Error', error);
+
                 }
             }
         });
