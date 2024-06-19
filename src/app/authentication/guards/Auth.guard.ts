@@ -5,41 +5,41 @@ import { Observable, pipe, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanMatch, CanActivate {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { }
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) { }
 
 
-  private checkAuthStatus(): boolean | Observable<boolean> {
-    return this.authService.checkAuthentication()
-    .pipe(
-      //tap(isAuth => console.log("Auth:", isAuth)),
-      tap(isAuthenticated => {
-        if (!isAuthenticated) {
-          this.router.navigate(['./authentication/login-1']);
-        }
-      })
-    );
-  }
+    private checkAuthStatus(): boolean | Observable<boolean> {
+        return this.authService.checkAuthentication()
+            .pipe(
+                //tap(isAuth => console.log("Auth:", isAuth)),
+                tap(isAuthenticated => {
+                    if (!isAuthenticated) {
+                        this.router.navigate(['./authentication/login-1']);
+                    }
+                })
+            );
+    }
 
-  canMatch(route: Route, segments: UrlSegment[]): MaybeAsync<GuardResult> {
-  /*   console.log("Cant Match");
-    console.log({ route, segments }); */
-
-
-    return this.checkAuthStatus();
-    //return true;
-  }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-
-    /* console.log("Cant Match"); */
-    /* console.log({ route, state }); */
+    canMatch(route: Route, segments: UrlSegment[]): MaybeAsync<GuardResult> {
+        /*   console.log("Cant Match");
+          console.log({ route, segments }); */
 
 
-    return this.checkAuthStatus();
-    //return true;
+        return this.checkAuthStatus();
+        //return true;
+    }
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
 
-  }
+        /* console.log("Cant Match"); */
+        /* console.log({ route, state }); */
+
+
+        return this.checkAuthStatus();
+        //return true;
+
+    }
 
 }
