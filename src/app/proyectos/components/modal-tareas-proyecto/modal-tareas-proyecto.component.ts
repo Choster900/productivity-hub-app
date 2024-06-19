@@ -61,69 +61,7 @@ export class ModalTareasProyectoComponent implements OnInit {
         });
     }
 
-    /*  onSubmit(): void {
-         this.tareas.forEach((element) => {
-             if (!element.id) {
-                 this.proyectoService.addTaskToEvento(element).subscribe({
-                     next: (response: TareasProyecto) => {
-                         console.log('tareas agregada[]', response);
-                         this.closeModal.emit();
-                     },
-                     error: (error) => {
-                         console.error('Error obteniendo las tareas', error);
-                     },
-                     complete: () => {
-                         console.log('Solicitud completada');
-                     },
-                 });
 
-                 return;
-             }
-
-             this.proyectoService.updateTaskInEvents(element).subscribe({
-                 next: (response: TareasProyecto) => {
-                     this.closeModal.emit();
-                     console.log('tarea actualizada[]', response);
-                 },
-                 error: (error) => {
-                     console.error('Error obteniendo las tareas', error);
-                 },
-                 complete: () => {
-                     console.log('Solicitud completada');
-                 },
-             });
-
-             element.subtareas.forEach((subTarea) => {
-                 if (!subTarea.id) {
-                     this.proyectoService.addSubTaskInTask(subTarea, element.id).subscribe({
-                         next: (response: Subtarea) => {
-                             this.closeModal.emit();
-                             console.log('sub tarea agregada[]', response);
-                         },
-                         error: (error) => {
-                             console.error('Error obteniendo las tareas', error);
-                         },
-                         complete: () => {
-                             console.log('Solicitud completada');
-                         },
-                     });
-                     return;
-                 }
-                 this.proyectoService.updateSubTaskInTask(subTarea).subscribe({
-                     next: (response: Subtarea) => {
-                         this.closeModal.emit();
-                         console.log('sub tarea actualizada[]', response);
-                     },
-                     error: (error) => {
-                         console.error('Error obteniendo las tareas', error);
-                     },
-                     complete: () => {
-                         console.log('Solicitud completada');
-                     },
-                 });
-             });
-         });
-     } */
 
     confirmModal?: NzModalRef;
 
@@ -144,7 +82,7 @@ export class ModalTareasProyectoComponent implements OnInit {
             nzTitle: '¿Desea guardar los cambios?',
             nzContent: 'Los cambios se guardarán y se reflejarán de inmediato.',
             nzOnOk: async () => {
-                await this.waitForTimeout(2000); // Espera a que el timeout termine
+                //await this.waitForTimeout(2000); // Espera a que el timeout termine
 
                 // Manejando cada tarea
                 this.tareas.forEach((element) => {
@@ -187,6 +125,8 @@ export class ModalTareasProyectoComponent implements OnInit {
                     // Manejando subtareas de la tarea
                     element.subtareas.forEach((subTarea) => {
                         if (!subTarea.id) {
+                            console.log(element);
+
                             // Agregar nueva subtarea
                             this.proyectoService.addSubTaskInTask(subTarea, element.id).subscribe({
                                 next: (response: Subtarea) => {

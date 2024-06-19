@@ -89,7 +89,7 @@ export class ProyectoService {
 
     addSubTaskInTask(subTarea: Subtarea, idTarea: number): Observable<Subtarea> {
 
-        if (!idTarea) throw Error('tarea.id is required');
+        //if (!idTarea) throw Error('tarea.id is required');
 
         const token = localStorage.getItem('token');
 
