@@ -27,7 +27,7 @@ export class SignUp1Component {
             this.signUpForm.controls[ i ].updateValueAndValidity();
         }
 
-        this.authService.singUp(this.transformToEvento(this.signUpForm.value))
+        this.authService.singUp(this.formatDataFormToInterfaceUser(this.signUpForm.value))
             .subscribe(user => {
                 console.log(user);
 
@@ -35,7 +35,7 @@ export class SignUp1Component {
             })
     }
 
-    private transformToEvento(formValue: any): User {
+    private formatDataFormToInterfaceUser(formValue: any): User {
 
         // Crear el objeto usuario
         const usuarioSignedUp: User = {
