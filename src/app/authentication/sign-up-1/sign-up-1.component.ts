@@ -23,15 +23,15 @@ export class SignUp1Component {
     submitForm(): void {
 
         for (const i in this.signUpForm.controls) {
-            this.signUpForm.controls[ i ].markAsDirty();
-            this.signUpForm.controls[ i ].updateValueAndValidity();
+            this.signUpForm.controls[i].markAsDirty();
+            this.signUpForm.controls[i].updateValueAndValidity();
         }
 
         this.authService.singUp(this.formatDataFormToInterfaceUser(this.signUpForm.value))
             .subscribe(user => {
                 console.log(user);
 
-                this.router.navigate(['/eventos/evento'])
+                this.router.navigate(['/authentication/login-1'])
             })
     }
 
@@ -75,28 +75,4 @@ export class SignUp1Component {
             fechaNacimiento: [null, [Validators.required, this.confirmationValidator]],
         });
     }
-
-    /*
-
-    {
-  "email": "string",
-  "password": "string",
-  "persona": {
-    "nombre": "string",
-    "apellido": "string",
-    "fechaNacimiento": "2024-06-19T15:40:32.829Z"
-  }
-}
-
-
-{
-  "email": "sergioadonaylopez23@gmail.com",
-  "password": "123456789",
-  "persona": {
-    "nombre": "sergio adonay",
-    "apellido": "lopez mejia",
-    "fechaNacimiento": "2001-02-23T16:33:06.325Z"
-  }
-}
-  */
 }
