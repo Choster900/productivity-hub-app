@@ -137,7 +137,6 @@ export class ProyectoService {
     }
 
 
-
     deleteProyectoById(id: number): Observable<Boolean> {
         const token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
